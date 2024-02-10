@@ -1,7 +1,7 @@
 class Block
   attr_reader :index, :timestamp, :transactions, 
 							:transactions_count, :previous_hash, 
-							:nonce, :hash 
+							:nonce, :hash, :mining_time
 
   def initialize(index, transactions, previous_hash)
     @index         		 	 = index
@@ -9,15 +9,18 @@ class Block
     @transactions 	 		 = transactions
 		@transactions_count  = transactions.size
     @previous_hash 		 	 = previous_hash
-    @nonce, @hash  		 	 = compute_hash_with_proof_of_work
+    @nonce, @hash, @mining_time  = compute_hash_with_proof_of_work
   end
 
-	def compute_hash_with_proof_of_work(difficulty="00")
-		nonce = 0
+	def compute_hash_with_proof_of_work(difficulty="0000")
+    start_time = Time.now
+    nonce = 0
 		loop do 
 			hash = calc_hash_with_nonce(nonce)
 			if hash.start_with?(difficulty)
-				return [nonce, hash]
+        end_time = Time.now
+        @mining_time = (end_time - start_time)
+				return [nonce, hash,@mining_time]
 			else
 				nonce +=1
 			end
