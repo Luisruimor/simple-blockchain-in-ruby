@@ -6,13 +6,13 @@ class Block
   def initialize(index, transactions, previous_hash)
     @index         		 	 = index
     @timestamp      	 	 = Time.now
-    @transactions 	 		 = transactions
-		@transactions_count  = transactions.size
+    @transactions         = transactions.first(5) # Limita a 5 transacciones
+    @transactions_count   = @transactions.size
     @previous_hash 		 	 = previous_hash
     @nonce, @hash, @mining_time  = compute_hash_with_proof_of_work
   end
 
-	def compute_hash_with_proof_of_work(difficulty="0000")
+	def compute_hash_with_proof_of_work(difficulty="00")
     start_time = Time.now
     nonce = 0
 		loop do 

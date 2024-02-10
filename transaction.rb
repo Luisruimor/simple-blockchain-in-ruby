@@ -4,7 +4,15 @@ def get_transactions_data
 	blank_transaction = Hash[from: "", to: "",
 													 what: "", qty: ""]
 	loop do
-		puts "" 
+
+	if transactions_block.size >= 5
+		puts "Máximo de 5 transacciones por bloque"
+		return transactions_block
+		break
+	end
+
+
+	puts ""
 		puts "Enter your name for the new transaction"
 		from = gets.chomp
 		puts "" 
